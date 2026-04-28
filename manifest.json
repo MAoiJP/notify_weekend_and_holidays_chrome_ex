@@ -17,6 +17,9 @@
       "https://www.googleapis.com/auth/calendar.events.readonly"
     ]
   },
+  "action": {
+    "default_popup": "popup.html"
+  },
   "background": {
     "service_worker": "background.js"
   },

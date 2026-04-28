@@ -1,4 +1,5 @@
 const CALENDAR_ID = "ja.japanese%23holiday%40group.v.calendar.google.com";
+const STORAGE_KEY = "customNotification";
 
 function getTodayString() {
   return new Date().toISOString().slice(0, 10);
@@ -71,11 +72,15 @@ async function checkAndNotify() {
   }
 
   if (weekend || holidayName) {
+    const custom = (await chrome.storage.local.get(STORAGE_KEY))[STORAGE_KEY];
     const dayLabel = ["日", "月", "火", "水", "木", "金", "土"][dayIndex];
-    let title = "今日はお休みです 🎉";
-    let message = "";
 
-    if (holidayName) {
+    const title = custom?.title || "今日はお休みです 🎉";
+    let message;
+
+    if (custom?.message) {
+      message = custom.message;
+    } else if (holidayName) {
       message = `${holidayName}（${dayLabel}曜日）です。ゆっくりお過ごしください！`;
     } else if (dayIndex === 6) {
       message = "土曜日です。週末をお楽しみください！";
