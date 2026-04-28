@@ -41,9 +41,8 @@ async function fetchHolidayToday() {
   return null;
 }
 
-function isWeekend() {
-  const day = new Date().getDay();
-  return day === 0 || day === 6;
+function isWeekend(dayIndex) {
+  return dayIndex === 0 || dayIndex === 6;
 }
 
 function showNotification(title, message) {
@@ -61,7 +60,8 @@ async function checkAndNotify() {
   const { lastNotifiedDate } = await chrome.storage.local.get("lastNotifiedDate");
   if (lastNotifiedDate === today) return;
 
-  const weekend = isWeekend();
+  const dayIndex = new Date().getDay();
+  const weekend = isWeekend(dayIndex);
   let holidayName = null;
 
   try {
@@ -71,13 +71,13 @@ async function checkAndNotify() {
   }
 
   if (weekend || holidayName) {
-    const dayLabel = ["日", "月", "火", "水", "木", "金", "土"][new Date().getDay()];
+    const dayLabel = ["日", "月", "火", "水", "木", "金", "土"][dayIndex];
     let title = "今日はお休みです 🎉";
     let message = "";
 
     if (holidayName) {
       message = `${holidayName}（${dayLabel}曜日）です。ゆっくりお過ごしください！`;
-    } else if (new Date().getDay() === 6) {
+    } else if (dayIndex === 6) {
       message = "土曜日です。週末をお楽しみください！";
     } else {
       message = "日曜日です。明日からまた頑張りましょう！";
@@ -88,12 +88,10 @@ async function checkAndNotify() {
   }
 }
 
-// ブラウザ起動時
 chrome.runtime.onStartup.addListener(() => {
   checkAndNotify();
 });
 
-// 拡張インストール時（初回のみ認証プロンプトを表示）
 chrome.runtime.onInstalled.addListener(async ({ reason }) => {
   if (reason === "install") {
     try {
