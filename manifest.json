@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "週末・祝日通知",
+  "version": "1.0.0",
+  "description": "週末・祝日にブラウザを開いたとき、1日1回バナー通知します",
+  "permissions": [
+    "notifications",
+    "storage",
+    "identity"
+  ],
+  "host_permissions": [
+    "https://www.googleapis.com/*"
+  ],
+  "oauth2": {
+    "client_id": "1038811287294-7j4fhrv8vic7hjlig6le8strbrnjhe1g.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/calendar.events.readonly"
+    ]
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "128": "icons/icon128.png"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4f2LS5srca9cFr5Bf3imYx5adaolsDjj9JLOuyoXe0QgZCRH4MxCi7jR+HdZDdV/B+0GD8NqeOQ7TAMnKTSMmAzKiqUsub6ooFZBjpHl8P07CKP3JKzC3H8LgjPXgPlT5qtxbvPBTSoGPUYLi74hfdlpYULwSr6RW6JhrwieVokLHVtvzx5zrzx3sr7u5h9fgXdSEgMQzJBbm+33V8tqGPxlt/J9XJGTgJZzYv1y9VyYgM3rmXqQytrZ0/SIo2yU+NndQooMsNDCNbfRWnDrUCJbHGWmHjd5c5OSINvS3vDUBxOwnSsJtv2FM6fqyVvRMt6VRZjTtfvXug0e3MSH8wIDAQAB"
+}
